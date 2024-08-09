@@ -41,7 +41,7 @@ public class SiswaAdapter extends  RecyclerView.Adapter<SiswaAdapter.ViewHolder>
     viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(context, siswa.getNama(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, " Nama : "+siswa.getNama()+" alamat : "+siswa.getAlamat(), Toast.LENGTH_SHORT).show();
         }
     });
     }
