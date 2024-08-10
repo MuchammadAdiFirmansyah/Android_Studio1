@@ -1,6 +1,7 @@
 package com.example.recyclerviewcardview;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.LinearLayout;
 
@@ -50,5 +51,10 @@ public class MainActivity extends AppCompatActivity {
         adapter = new SiswaAdapter(this, siswaList);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    public void btnTambah(View view) {
+        siswaList.add(new Siswa(" Joko Tole", " Surabaya"));
+        adapter.notifyDataSetChanged();
     }
 }
