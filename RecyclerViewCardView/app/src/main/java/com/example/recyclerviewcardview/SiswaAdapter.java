@@ -1,17 +1,17 @@
 package com.example.recyclerviewcardview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -33,17 +33,42 @@ public class SiswaAdapter extends  RecyclerView.Adapter<SiswaAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-    Siswa siswa =siswaList.get(i);
-    viewHolder.tvNama.setText(siswa.getNama());
-    viewHolder.tvAlamat.setText(siswa.getAlamat());
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, @SuppressLint("RecyclerView") final int i) {
+        Siswa siswa = siswaList.get(i);
+        viewHolder.tvNama.setText(siswa.getNama());
+        viewHolder.tvAlamat.setText(siswa.getAlamat());
 
+/*
     viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Toast.makeText(context, " Nama : "+siswa.getNama()+" alamat : "+siswa.getAlamat(), Toast.LENGTH_SHORT).show();
         }
     });
+    */
+
+        viewHolder.tvMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context,viewHolder.tvMenu);
+                popupMenu.inflate(R.menu.menu_option);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem Item) {
+                        if (Item.getItemId() == R.id.menu_simpan) {
+                            Toast.makeText(context, "Simpan Data "+siswa.getNama(), Toast.LENGTH_SHORT).show();
+
+                        } else if (Item.getItemId() == R.id.menu_hapus) {
+                            siswaList.remove(i);
+                            notifyDataSetChanged();
+                            Toast.makeText(context, siswa.getNama()+"Sudah Di Hapus", Toast.LENGTH_SHORT).show();
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
     }
 
     @Override
@@ -53,13 +78,14 @@ public class SiswaAdapter extends  RecyclerView.Adapter<SiswaAdapter.ViewHolder>
 
     public class  ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView tvNama, tvAlamat;
+            TextView tvNama, tvAlamat, tvMenu;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 tvNama = itemView.findViewById(R.id.tvNama);
                 tvAlamat = itemView.findViewById(R.id.tvAlamat);
+                tvMenu = itemView.findViewById(R.id.tvMenu);
             }
         }
 }
