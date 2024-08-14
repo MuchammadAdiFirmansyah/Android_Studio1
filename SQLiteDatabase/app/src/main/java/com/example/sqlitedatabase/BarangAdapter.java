@@ -3,9 +3,12 @@ package com.example.sqlitedatabase;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,17 +27,43 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_barang,viewGroup, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, @SuppressLint ("RecyclearView") int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, @SuppressLint("RecyclerView") int i) {
         viewHolder.tvBarang.setText(barangList.get(i).getBarang());
         viewHolder.tvStok.setText(barangList.get(i).getStok());
         viewHolder.tvHarga.setText(barangList.get(i).getHarga());
 
+        viewHolder.tvMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PopupMenu popupMenu = new PopupMenu(context, viewHolder.tvMenu);
+                popupMenu.inflate(R.menu.menu_item);
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int itemId = item.getItemId();
+                        if(itemId == R.id.ubah)  {
+                                Toast.makeText(context, "UBAH", Toast.LENGTH_SHORT).show();
+
+                        } else if (item.getItemId() == R.id.hapus) {
+                        Toast.makeText(context, "HAPUS", Toast.LENGTH_SHORT).show();
+                        ((MainActivity)context).deleteData(barangList.get(i).getIdbarang());
+                    }
+                        return false;
+                    }
+                });
+
+                popupMenu.show();
+
+            }
+        });
 
     }
 
@@ -45,7 +74,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvBarang, tvStok, tvHarga, tvMeu;
+        TextView tvBarang, tvStok, tvHarga, tvMenu;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,7 +82,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
             tvBarang = itemView.findViewById(R.id.tvBarang);
             tvStok = itemView.findViewById(R.id.tvStok);
             tvHarga = itemView.findViewById(R.id.tvHarga);
-            tvMeu = itemView.findViewById(R.id.tvMenu);
+            tvMenu = itemView.findViewById(R.id.tvMenu);
         }
     }
 
