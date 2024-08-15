@@ -27,20 +27,15 @@ public class MainActivity extends AppCompatActivity {
         load();
 
     }
-
-    @Override
-    public FileOutputStream openFileOutput(String name, int mode) throws FileNotFoundException {
-        return super.openFileOutput(name, mode);
+    
+    public void load(){
+        tvHasil= findViewById(R.id.tvHasil);
     }
 
-    public void load(){
-        tvHasil = findViewById(R.id.tvHasil);
-}
     public void BtnUP(View view) {
         count++;
         tvHasil.setText(count+"");
     }
-
     public void BtnDown(View view) {
         count--;
         tvHasil.setText(count+"");

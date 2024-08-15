@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         load();
     }
 
-    public void load() {
+    public void load()  {
         etbarang = findViewById(R.id.etBarang);
     }
 
@@ -32,6 +32,20 @@ public class MainActivity extends AppCompatActivity {
         String barang = etbarang.getText().toString();
         Intent intent = new Intent(this, Barang.class);
         intent.putExtra("ISI",barang);
+        startActivity(intent);
+    }
+
+    public void btnPenjualan(View view) {
+        String penjualan =etbarang.getText().toString();
+        Intent intent =new Intent(this, PenjualanActivity.class);
+        intent.putExtra("ISI",penjualan);
+        startActivity(intent);
+    }
+
+    public void btnPembelian(View view) {
+        String pembelian =etbarang.getText().toString();
+        Intent intent =new Intent(this, PembelianActivity.class);
+        intent.putExtra("ISI",pembelian);
         startActivity(intent);
     }
 }

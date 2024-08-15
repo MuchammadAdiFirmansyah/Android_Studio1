@@ -65,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnBagi(View view) {
-        if (etBil_1.getText().toString().equals("")|| etBil_2.getText().toString().equals("")) {
+        if (etBil_1.getText().toString().equals("") || etBil_2.getText().toString().equals("")) {
             Toast.makeText(this, "Ada Bilangan Yang Kosong", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
 
             double bil_1 = Double.parseDouble(etBil_1.getText().toString());
             double bil_2 = Double.parseDouble(etBil_2.getText().toString());
@@ -77,6 +77,19 @@ public class MainActivity extends AppCompatActivity {
 
             tvhasil.setText(hasil + "");
         }
-
     }
-}
+        public void btnKali (View view){
+            if (etBil_1.getText().toString().equals("") || etBil_2.getText().toString().equals("")) {
+                Toast.makeText(this, "Ada Bilangan Yang Kosong", Toast.LENGTH_SHORT).show();
+            } else {
+
+
+                double bil_1 = Double.parseDouble(etBil_1.getText().toString());
+                double bil_2 = Double.parseDouble(etBil_2.getText().toString());
+
+                double hasil = bil_1 * bil_2;
+
+                tvhasil.setText(hasil + "");
+            }
+        }
+    }
