@@ -72,20 +72,20 @@ public class MainActivity extends AppCompatActivity {
                 if (db.runSQL(sql)) {
                     pesan("insert berhasil");
                     selectData();
-                }else {
+                } else {
                     pesan("insert gagal");
                 }
             } else {
-               String sql ="UPDATE tblbarang\n"+
-                       "SET barang =\'"+barang+"', stok = "+stok+", harga = "+harga+"\n"+
-                       "WHERE idbarang = "+idbarang+"; ";
+                String sql = "UPDATE tblbarang\n" +
+                        "SET barang ='" + barang + "', stok = " + stok + ", harga = " + harga + "\n" +
+                        "WHERE idbarang = " + idbarang + "; ";
 
-               if (db.runSQL(sql)) {
-                   pesan("data sudah diubah");
-                   selectData();
-               }else {
-                   pesan("data tidak bisa diubah");
-               }
+                if (db.runSQL(sql)) {
+                    pesan("data sudah diubah");
+                    selectData();
+                } else {
+                    pesan("data tidak bisa diubah");
+                }
             }
 
         }
@@ -99,29 +99,31 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, isi, Toast.LENGTH_SHORT).show();
     }
 
-    public void selectData(){
+    public void selectData() {
         String sql = "SELECT * FROM tblbarang ORDER BY barang ASC";
         Cursor cursor = db.select(sql);
         databarang.clear();
-      if (cursor.getCount() > 0){
-          while (cursor.moveToNext()) {
-              @SuppressLint("Range") String idbarang = cursor.getString(cursor.getColumnIndex("idbarang"));
-              @SuppressLint("Range") String barang = cursor.getString(cursor.getColumnIndex("barang"));
-              @SuppressLint("Range") String stok = cursor.getString(cursor.getColumnIndex("stok"));
-              @SuppressLint("Range") String harga = cursor.getString(cursor.getColumnIndex("harga"));
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") String idbarang = cursor.getString(cursor.getColumnIndex("idbarang"));
+                @SuppressLint("Range") String barang = cursor.getString(cursor.getColumnIndex("barang"));
+                @SuppressLint("Range") String stok = cursor.getString(cursor.getColumnIndex("stok"));
+                @SuppressLint("Range") String harga = cursor.getString(cursor.getColumnIndex("harga"));
 
 
-              databarang.add(new Barang(idbarang, barang, stok, harga));
-          }
+                databarang.add(new Barang(idbarang, barang, stok, harga));
+            }
 
-          adapter = new BarangAdapter(this, databarang);
-          rcvBarang.setAdapter(adapter);
-          adapter.notifyDataSetChanged();
+            adapter = new BarangAdapter(this, databarang);
+            rcvBarang.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
 
-      }else{
-              pesan("Data Kosong");
-          }
-    } public void deleteData(String id) {
+        } else {
+            pesan("Data Kosong");
+        }
+    }
+
+    public void deleteData(String id) {
         idbarang = id;
 
 
@@ -154,4 +156,12 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("Range")
     public void selectUpdate(String id) {
         idbarang = id;
-    }}
+        String sql = "SELECT * from tblbarang WHERE idbarang=" + id + ";";
+        Cursor cursor = db.select(sql);
+        cursor.moveToNext();
+        etBarang.setText(cursor.getString(cursor.getColumnIndex("barang")));
+        etStok.setText(cursor.getString(cursor.getColumnIndex("stok")));
+        etHarga.setText(cursor.getString(cursor.getColumnIndex("harga")));
+        tvPilihan.setText("update");
+    }
+}
